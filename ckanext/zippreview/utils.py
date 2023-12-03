@@ -145,7 +145,7 @@ def _prepare_child_data(zip_info):
 
 def _prepare_parent_data(file_name):
     return {
-        "title": file_name,
+        "title": file_name.encode('cp437').decode('UTF-8'),
         "children": [],
         "icon": 'folder-open'
     }
