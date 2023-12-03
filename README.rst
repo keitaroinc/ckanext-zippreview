@@ -16,7 +16,6 @@ Compatibility with core CKAN versions:
 | 2.8             | not tested    |
 | 2.9             | Yes           |
 | 2.10            | not tested    |
-
 ------------
 Installation
 ------------
