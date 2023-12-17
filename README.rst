@@ -52,8 +52,6 @@ Configuration
 
 To enable ckanext-zippreview to list the hidden files and folders add:
 
-```
-ckanext.zipview.list_hidden_files = True
-```
+     ckanext.zipview.list_hidden_files = True
 
 These option is setup to False by default.
