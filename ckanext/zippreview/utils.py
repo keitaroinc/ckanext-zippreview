@@ -14,7 +14,7 @@ from ckan.lib import uploader, formatters
 log = logging.getLogger(__name__)
 
 ALLOWED_FMTS = ('zip', 'application/zip', 'application/x-zip-compressed')
-LIST_HIDDEN_FILES = config.get('ckanext.xloader.job_timeout', True)
+LIST_HIDDEN_FILES = config.get('ckanext.zipview.list_hidden_files', True)
 
 
 def no_hidden(list_of_files):
