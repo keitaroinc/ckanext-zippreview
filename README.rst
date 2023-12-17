@@ -50,7 +50,7 @@ do::
 Configuration
 --------------
 
-To enable ckanext-zippreview to list the hidden files and folders add:
+To enable ckanext-zippreview to list the hidden files and folders add::
 
      ckanext.zipview.list_hidden_files = True
 
