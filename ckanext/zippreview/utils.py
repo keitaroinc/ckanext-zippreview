@@ -14,7 +14,7 @@ from ckan.lib import uploader, formatters
 log = logging.getLogger(__name__)
 
 ALLOWED_FMTS = ('zip', 'application/zip', 'application/x-zip-compressed')
-LIST_HIDDEN_FILES = config.get('ckanext.zipview.list_hidden_files', True)
+LIST_HIDDEN_FILES = config.get('ckanext.zipview.list_hidden_files', False)
 
 
 def no_hidden(list_of_files):
@@ -31,7 +31,7 @@ def get_zip_list(rsc):
         value = None
         try:
             zf = zipfile.ZipFile(upload.get_path(rsc['id']), 'r')
-            if LIST_HIDDEN_FILES is True:
+            if LIST_HIDDEN_FILES == 'True':
                 value = zf.filelist
             else:
                 value = no_hidden(zf.filelist)
