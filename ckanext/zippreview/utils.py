@@ -7,13 +7,22 @@ import logging
 from io import BytesIO
 from collections import OrderedDict
 from urllib.parse import urlparse
-
+from ckan.common import config
 import requests
 
 from ckan.lib import uploader, formatters
 log = logging.getLogger(__name__)
 
 ALLOWED_FMTS = ('zip', 'application/zip', 'application/x-zip-compressed')
+LIST_HIDDEN_FILES = config.get('ckanext.zipview.list_hidden_files', 'False')
+
+
+def no_hidden(list_of_files):
+    for f in list_of_files:
+        if not (f.filename.startswith('.')
+                or f.filename.startswith('__MACOSX')
+                or '.DS_Store' in f.filename):
+            yield f
 
 
 def get_zip_list(rsc):
@@ -22,7 +31,10 @@ def get_zip_list(rsc):
         value = None
         try:
             zf = zipfile.ZipFile(upload.get_path(rsc['id']), 'r')
-            value = zf.filelist
+            if LIST_HIDDEN_FILES == 'True':
+                value = zf.filelist
+            else:
+                value = no_hidden(zf.filelist)
         except Exception:
             # Sometimes values that can't be converted to ints can sneak
             # into the db. In this case, just leave them as they are.
@@ -99,7 +111,7 @@ def _open_remote_zip(url, offset=0):
     return requests.get(url, headers={'Range': 'bytes={}-'.format(offset)})
 
 
-def get_zip_tree(rsc):    
+def get_zip_tree(rsc): 
     zip_list = get_zip_list(rsc)
     if not zip_list:
         return
